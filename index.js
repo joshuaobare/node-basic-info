@@ -10,14 +10,25 @@ http.createServer((req,res) => {
     const filename = "." + q.pathname
     fs.readFile(filename, (err,data) => {
         if(err) {
-            res.writeHead(404 ,{"Content-Type": "text/html"} )
-            res.write(data)
-            return res.end()
+            fs.readFile("404.html" , (error, errorData) => {
+                if(error){
+                    res.writeHead(500 , {"Content-Type": "text/html"} )
+                    return res.end("Internal Server Error")
+                }
+                res.writeHead(404 ,{"Content-Type": "text/html"} )
+                res.write(errorData)
+                return res.end()
+            })
+            
         }
         
-        res.writeHead(200 , {"Content-Type": "text/html"})
+        else {
+            res.writeHead(200 , {"Content-Type": "text/html"})
         res.write(data)
         return res.end()
+        }
+        
+        
     })
     
 }).listen(port, hostname, () => {
