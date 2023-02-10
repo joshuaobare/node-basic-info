@@ -1,0 +1,22 @@
+{
+  "name": "basic-info",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuaobare/node-basic-info.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joshuaobare/node-basic-info/issues"
+  },
+  "homepage": "https://github.com/joshuaobare/node-basic-info#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
