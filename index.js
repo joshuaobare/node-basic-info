@@ -1,42 +1,21 @@
-const http = require("http");
+const express = require("express")
+const app = express()
 const fs = require("fs");
-const url = require("url");
-
 const hostname = "127.0.0.1";
-const port = 8080;
+const port = 3080;
 
-http
-  .createServer((req, res) => {
-    const q = url.parse(req.url, true);
-    const filename = "." + q.pathname;
 
-    if (req.url === "/") {
-      fs.readFile("index.html", (err, data) => {
-        if (err) throw err;
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.write(data);
-        return res.end();
-      });
-    }
+app.use(express.static("."))
+app.use((req,res) => {
+  fs.readFile("404.html", (err, data) => {
+    if (err) throw err;
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.status(500).write(data)
+    return res.end();
+  });
+  
+})
 
-    fs.readFile(filename, (err, data) => {
-      if (err) {
-        fs.readFile("404.html", (error, errorData) => {
-          if (error) {
-            res.writeHead(500, { "Content-Type": "text/html" });
-            return res.end("Internal Server Error");
-          }
-          res.writeHead(404, { "Content-Type": "text/html" });
-          res.write(errorData);
-          return res.end();
-        });
-      } else {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.write(data);
-        return res.end();
-      }
-    });
-  })
-  .listen(port, hostname, () => {
-    console.log(`Server is running at http://${hostname}:${port}`);
+  app.listen(port, () => {
+    console.log(`Server is running at http://{hostname}:${port}`);
   });
